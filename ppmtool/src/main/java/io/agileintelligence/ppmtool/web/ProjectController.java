@@ -28,21 +28,7 @@ public class ProjectController {
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
         // Binding result vraca listu errora
         // upitnik je da mozemo bilo sta da vratimo, vracamo response entity bilo kog tipa ili tipa Project ili String...
-        if(result.hasErrors()) {
 
-            Map<String, String> errorMap = new HashMap<>();
-
-            for(FieldError error: result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
-        /*Ocemo da rezultat bude u obliku
-        {
-            "field": "errormessage",
-            "field": "errormessage"
-        }*/
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
         // definisemo i status HTTP odgovora koji zelimo da posaljemo
